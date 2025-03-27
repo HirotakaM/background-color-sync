@@ -7,13 +7,12 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
-// 静的ファイルの配信
 app.use(express.static(path.join(__dirname, 'public')));
 
 wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(message);
       }
     });
