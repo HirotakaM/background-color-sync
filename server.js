@@ -10,13 +10,14 @@ const wss = new WebSocket.Server({ server });
 app.use(express.static(path.join(__dirname, 'public')));
 
 wss.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    wss.clients.forEach((client) => {
-      if (client !== ws && client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
+    ws.on('message', (message) => {
+        console.log("サーバーで受信:", message.toString());
+        wss.clients.forEach((client) => {
+            if (client !== ws && client.readyState === WebSocket.OPEN) {
+                client.send(message);
+            }
+        });
     });
-  });
 });
 
 const PORT = process.env.PORT || 3000;
