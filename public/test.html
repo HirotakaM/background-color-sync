@@ -1,0 +1,32 @@
+<!-- public/test.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>テスト</title>
+</head>
+<body>
+  <h1>背景色テスト</h1>
+  <button onclick="sendColor('red')">赤</button>
+  <button onclick="sendColor('green')">緑</button>
+  <button onclick="sendColor('blue')">青</button>
+
+  <script>
+    const socket = new WebSocket("wss://background-color-sync.onrender.com");
+
+    socket.onopen = () => {
+      console.log("[test] WebSocket connected");
+    };
+
+    socket.onmessage = (event) => {
+      console.log("[test] received:", event.data);
+      document.body.style.backgroundColor = event.data;
+    };
+
+    function sendColor(color) {
+      console.log("[test] sending:", color);
+      socket.send(color);
+    }
+  </script>
+</body>
+</html>
