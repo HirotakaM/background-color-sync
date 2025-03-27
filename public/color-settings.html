@@ -41,25 +41,29 @@
     //const socket = new WebSocket("wss://your-node-server.onrender.com");
     const socket = new WebSocket("wss://background-color-sync.onrender.com");
     //https://background-color-sync.onrender.com
+    
+    socket.onopen = () => {
+        console.log("[settings] WebSocket connected");
+    };
+
+    const sendColor = (color) => {
+        console.log("[settings] sending:", color);
+        //socket.send(color);
+    };
 
     for (const [label, color] of Object.entries(colors)) {
       const btn = document.createElement("button");
       btn.textContent = label;
       btn.style.backgroundColor = color;
       btn.onclick = () => {
-        socket.send(color);
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(color);
+        } else {
+            console.warn("WebSocket not ready yet");
+        }
       };
       container.appendChild(btn);
     }
-    
-    socket.onopen = () => {
-        console.log("[settings] WebSocket connected");
-    };
-
-  const sendColor = (color) => {
-    console.log("[settings] sending:", color);
-    socket.send(color);
-  };
   </script>
 </body>
 </html>

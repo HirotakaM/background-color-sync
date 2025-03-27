@@ -22,14 +22,10 @@
     const socket = new WebSocket("wss://background-color-sync.onrender.com");
     //https://background-color-sync.onrender.com
 
-    socket.onmessage = (event) => {
-      document.body.style.backgroundColor = event.data;
-    };
-    
     socket.onopen = () => {
         console.log("[viewer] WebSocket connected");
     };
-
+    
     socket.onmessage = (event) => {
         console.log("[viewer] received:", event.data);
         document.body.style.backgroundColor = event.data;
