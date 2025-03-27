@@ -11,10 +11,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 wss.on('connection', (ws) => {
     ws.on('message', (message) => {
-        console.log("サーバーで受信:", message.toString());
+        const msg = message.toString(); // ← 明示的に文字列に変換！
+        console.log("received from client:", msg);
+
         wss.clients.forEach((client) => {
             if (client !== ws && client.readyState === WebSocket.OPEN) {
-                client.send(message);
+                client.send(msg); // ← 文字列で送る
             }
         });
     });
