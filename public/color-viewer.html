@@ -1,0 +1,28 @@
+<!-- public/color-viewer.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>背景色変更</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 20px;
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <h1>背景色変更</h1>
+
+  <script>
+    // ✅ 外部Node.jsサーバーに接続
+    const socket = new WebSocket("wss://your-node-server.onrender.com");
+
+    socket.onmessage = (event) => {
+      document.body.style.backgroundColor = event.data;
+    };
+  </script>
+</body>
+</html>
