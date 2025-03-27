@@ -24,46 +24,39 @@
   <div id="buttons"></div>
 
   <script>
-    const colors = {
-      "白": "white",
-      "黒": "black",
-      "赤": "red",
-      "オレンジ": "orange",
-      "黄": "yellow",
-      "黄緑": "yellowgreen",
-      "緑": "green",
-      "青": "blue",
-      "紫": "purple"
-    };
+  const colors = {
+    "白": "white",
+    "黒": "black",
+    "赤": "red",
+    "オレンジ": "orange",
+    "黄": "yellow",
+    "黄緑": "yellowgreen",
+    "緑": "green",
+    "青": "blue",
+    "紫": "purple"
+  };
 
-    const container = document.getElementById("buttons");
-    // ✅ 外部Node.jsサーバーのWebSocket URLに変更（例: Glitch/Render）
-    //const socket = new WebSocket("wss://your-node-server.onrender.com");
-    const socket = new WebSocket("wss://background-color-sync.onrender.com");
-    //https://background-color-sync.onrender.com
-    
-    socket.onopen = () => {
-        console.log("[settings] WebSocket connected");
-    };
+  const container = document.getElementById("buttons");
+  const socket = new WebSocket("wss://background-color-sync.onrender.com");
 
-    const sendColor = (color) => {
-        console.log("[settings] sending:", color);
-        //socket.send(color);
-    };
+  socket.onopen = () => {
+    console.log("[settings] WebSocket connected");
 
     for (const [label, color] of Object.entries(colors)) {
       const btn = document.createElement("button");
       btn.textContent = label;
       btn.style.backgroundColor = color;
       btn.onclick = () => {
-        if (socket.readyState === WebSocket.OPEN) {
-            socket.send(color);
-        } else {
-            console.warn("WebSocket not ready yet");
-        }
+        console.log("[settings] actually sending:", color);
+        socket.send(color);
       };
       container.appendChild(btn);
     }
-  </script>
+  };
+
+  socket.onerror = (err) => {
+    console.error("[settings] WebSocket error:", err);
+  };
+    </script>
 </body>
 </html>
