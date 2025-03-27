@@ -51,6 +51,15 @@
       };
       container.appendChild(btn);
     }
+    
+    socket.onopen = () => {
+        console.log("[settings] WebSocket connected");
+    };
+
+  const sendColor = (color) => {
+    console.log("[settings] sending:", color);
+    socket.send(color);
+  };
   </script>
 </body>
 </html>

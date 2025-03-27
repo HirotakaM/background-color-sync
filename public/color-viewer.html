@@ -25,6 +25,19 @@
     socket.onmessage = (event) => {
       document.body.style.backgroundColor = event.data;
     };
+    
+    socket.onopen = () => {
+        console.log("[viewer] WebSocket connected");
+    };
+
+    socket.onmessage = (event) => {
+        console.log("[viewer] received:", event.data);
+        document.body.style.backgroundColor = event.data;
+    };
+
+    socket.onerror = (err) => {
+        console.error("[viewer] WebSocket error:", err);
+    };
   </script>
 </body>
 </html>
