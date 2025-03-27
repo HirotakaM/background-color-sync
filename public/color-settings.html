@@ -38,7 +38,9 @@
 
     const container = document.getElementById("buttons");
     // ✅ 外部Node.jsサーバーのWebSocket URLに変更（例: Glitch/Render）
-    const socket = new WebSocket("wss://your-node-server.onrender.com");
+    //const socket = new WebSocket("wss://your-node-server.onrender.com");
+    const socket = new WebSocket("wss://background-color-sync.onrender.com");
+    //https://background-color-sync.onrender.com
 
     for (const [label, color] of Object.entries(colors)) {
       const btn = document.createElement("button");
